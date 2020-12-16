@@ -32,6 +32,8 @@ def create_analiz():
         for dovidnik in dovidniks:
             if index_code == dovidnik[0]:
                 return dovidnik[1]
+                
+        return"***назва не знайдна"
         
 
     analiz_list = []
@@ -45,7 +47,7 @@ def create_analiz():
         analiz_work = analiz.copy()
 
         analiz_work['balance_name'] = pokaznik[0]
-        analiz_work['pokaznik'] = get_index_name(dovidnik[1])
+        analiz_work['pokaznik'] = get_index_name(pokaznik[1])
         analiz_work['start_year'] = pokaznik[2]
         analiz_work['beginning2_sum'] = pokaznik[3]
         analiz_work['beginning2_temp'] = float(analiz_work['beginning2_sum']) / float(analiz_work['start_year']) * 100
@@ -61,5 +63,3 @@ def create_analiz():
     return analiz_list
 
 
-def format_analiz(analiz):
-    return f'{analiz.get("balance_name"):20} | {analiz.get("pokaznik"):20} | {analiz.get("start_year"):6} | {analiz.get("beginning2_sum"):6} | {analiz.get("beginning2_temp"):6} | {analiz.get("beginning3_sum"):6} | {analiz.get("beginning3_temp"):6} | {analiz.get("beginning4_sum"):6} | {analiz.get("beginning4_temp"):6} | {analiz.get("end_year_sum"):6} | {analiz.get("end_year_sum"):6} |'

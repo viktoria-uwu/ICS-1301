@@ -4,7 +4,7 @@
 """
 
 import os
-from process_data import create_analiz, format_analiz
+from process_data import create_analiz
 from data_service import show_dovidniks, show_pokazniky, get_dovidniks, get_pokazniky
 
 MAIN_MENU = \
@@ -45,17 +45,17 @@ def show_analiz(analiz_list):
     print(HEADER)
     
     for analiz in analiz_list:
-        print(f"{analiz['balance_name']:25}",
-              f"{analiz['pokaznik']:20}",
-              f"{analiz['start_year']:>15}",
-              f"{analiz['beginning2_sum']:>10.2f}",
-              f"{analiz['beginning2_temp']:>10.2f}",
-              f"{analiz['beginning3_sum']:>11.2f}",
-              f"{analiz['beginning3_temp']:>11.2f}",
-              f"{analiz['beginning4_sum']:>12.2f}",
-              f"{analiz['beginning4_temp']:>12.2f}",
-              f"{analiz['end_year_sum']:>13.2f}",
-              f"{analiz['end_year_sum']:>13.2f}"
+        print(f"{analiz['balance_name']:25}",         
+              f"{analiz['pokaznik']:20}",             
+              f"{analiz['start_year']:>15}",          
+              f"{analiz['beginning2_sum']:>10.2f}",   
+              f"{analiz['beginning2_temp']:>10.2f}",  
+              f"{analiz['beginning3_sum']:>11.2f}",   
+              f"{analiz['beginning3_temp']:>11.2f}", 
+              f"{analiz['beginning4_sum']:>12.2f}",   
+              f"{analiz['beginning4_temp']:>12.2f}",  
+              f"{analiz['end_year_sum']:>13.2f}",     
+              f"{analiz['end_year_sum']:>13.2f}"     
               )
     
     print(FOOTER)
@@ -71,17 +71,17 @@ def write_analiz(analiz_list):
     with open('./data/analiz.txt', "w") as analiz_file:
         for analiz in analiz_list:
             line = \
-                f"{(analiz['balance_name']) + ';':20}"   + \
-                f"{(analiz['pokaznik']) + ';':20}"       + \
-                f"{(analiz['start_year'])  + ';':5}" + \
-                f"{(analiz['beginning2_sum']) + ';':5}"  + \
-                f"{(analiz['beginning2_temp']) + ';':5}" + \
-                f"{(analiz['beginning3_sum']) + ';':5}"  + \
-                f"{(analiz['beginning3_temp']) + ';':5}" + \
-                f"{(analiz['beginning4_sum']) + ';':5}"  + \
-                f"{(analiz['beginning4_temp']) + ';':5}" + \
-                f"{(analiz['end_year_sum']) + ';':5}"    + \
-                f"{(analiz['end_year_temp']) + ';':5}"   + '\n'
+                str(analiz['balance_name']) + ';' + \
+                str(analiz['pokaznik']) + ';' + \
+                str(analiz['start_year'])  + ';' + \
+                str(analiz['beginning2_sum']) + ';' + \
+                str(analiz['beginning2_temp']) + ';' + \
+                str(analiz['beginning3_sum']) + ';'  + \
+                str(analiz['beginning3_temp']) + ';' + \
+                str(analiz['beginning4_sum']) + ';' + \
+                str(analiz['beginning4_temp']) + ';' + \
+                str(analiz['end_year_sum']) + ';' + \
+                str(analiz['end_year_temp']) + ';' + '\n'
                 
             analiz_file.write(line)
         
@@ -101,17 +101,14 @@ while True:
         exit(0)
     
     elif command_number == '1':
-        print(TITLE)
-        print(HEADER)
-        for item in create_analiz():
-            print(format_analiz(item))
-        print(FOOTER)
+        analiz_list = create_analiz()
+        show_analiz(analiz_list)
         enter = input("Для проодовження натисніть <Enter>")
     
     elif command_number == '2':
         print("Запис результату в файл...")
         analiz_list = create_analiz()
-        show_analiz(analiz_list)
+        write_analiz(analiz_list)
         enter = input("Для проодовження натисніть <Enter>")
     
     elif command_number == '3':

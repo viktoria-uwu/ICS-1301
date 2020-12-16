@@ -55,8 +55,6 @@ def show_dovidniks(dovidniks):
             print("Код рядка:{:3} Показник:{:30}" .format(dovidnik[0], dovidnik[1]))
             kol_lines +=1
 
-    if kol_lines == 0:
-        print("По вашому запиту нічого не знайдено")
         
 def show_pokazniky(pokazniky):
     """виводить показники балансу підприємства на екран
