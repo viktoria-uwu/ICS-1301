@@ -4,7 +4,7 @@
 """
 
 import os
-from process_data import create_analiz_list
+from process_data import create_analiz, format_analiz
 from data_service import show_dovidniks, show_pokazniky, get_dovidniks, get_pokazniky
 
 MAIN_MENU = \
@@ -12,7 +12,7 @@ MAIN_MENU = \
 ~~~~~~~~~ ОБРОБКА АНАЛІЗІВ СЕРЕДНІХ РИНКОВИХ ЦІН НА ОСНОВІ ПРОДУКТІВ СПОЖИВЧОГО КОШИКА ~~~~~~~~~~
 
 1 - вивід динаміки капіталу на екран
-2 - запис динаміки капіталу в файл
+2 - запис результату в файл
 3 - вивід показників балансу
 4 - вивід довідника довідника показників балансу
 0 - завершити роботу
@@ -21,16 +21,18 @@ MAIN_MENU = \
 TITLE = "АНАЛІЗ ДИНАМІЧНИХ ОБОРОТНИХ КОШТІВ ТА ОБОРОТНОГО КАПІТАЛУ ПІДПРИЄМСТВА"
 HEADER = \
 '''
-=================================================================================================================================================================================================================================================================================================================
-| Назва підрозділу балансу | Показник | На початок року | На початок 2 кв. сума, т.грн | На початок 2 кв. темп росту % | На початок 3 кв. сума, т.грн | На початок 3 кв. темп росту % | На початок 4 кв. сума, т.грн | На початок 4 кв. темп росту % | На кінець року сума, т.грн | На кінець року темп росту % |
-=================================================================================================================================================================================================================================================================================================================
+=============================================================================================================================================================================
+|                          |          |                 |       На початок 2 кв.     |       На початок 3 кв.     |       На початок 4 кв.     |       На кінець року       | 
+| Назва підрозділу балансу | Показник | На початок року |============================|============================|============================|============================|
+|                          |          |                 | сума, т.грн | темп росту % | сума, т.грн | темп росту % | сума, т.грн | темп росту % | сума, т.грн | темп росту % |
+=============================================================================================================================================================================
 '''
 FOOTER = \
 '''
-=================================================================================================================================================================================================================================================================================================================
+==============================================================================================================================================================================
 '''
 
-STOP_MESSAGE = "Нажміть будь-яку клавішу для продовження"
+enter = "Для проодовження натисніть <Enter>"
 
 def show_analiz(analiz_list):
     """виводить сформовані аналізи на екран у вигляді таблиці
@@ -45,7 +47,7 @@ def show_analiz(analiz_list):
     for analiz in analiz_list:
         print(f"{analiz['balance_name']:25}",
               f"{analiz['pokaznik']:20}",
-              f"{analiz['beginning_year']:>15}",
+              f"{analiz['start_year']:>15}",
               f"{analiz['beginning2_sum']:>10.2f}",
               f"{analiz['beginning2_temp']:>10.2f}",
               f"{analiz['beginning3_sum']:>11.2f}",
@@ -69,17 +71,17 @@ def write_analiz(analiz_list):
     with open('./data/analiz.txt', "w") as analiz_file:
         for analiz in analiz_list:
             line = \
-                f"{(analiz['balance_name']) + ';':15}"   + \
-                f"{(analiz['pokaznik']) + ';':30}"       + \
-                f"{(analiz['beginning_year'])  + ';':7}" + \
-                f"{(analiz['beginning2_sum']) + ';':7}"  + \
-                f"{(analiz['beginning2_temp']) + ';':7}" + \
-                f"{(analiz['beginning3_sum']) + ';':7}"  + \
-                f"{(analiz['beginning3_temp']) + ';':7}" + \
-                f"{(analiz['beginning4_sum']) + ';':7}"  + \
-                f"{(analiz['beginning4_temp']) + ';':7}" + \
-                f"{(analiz['end_year_sum']) + ';':7}"    + \
-                f"{(analiz['end_year_temp']) + ';':7}"   + '\n'
+                f"{(analiz['balance_name']) + ';':20}"   + \
+                f"{(analiz['pokaznik']) + ';':20}"       + \
+                f"{(analiz['start_year'])  + ';':5}" + \
+                f"{(analiz['beginning2_sum']) + ';':5}"  + \
+                f"{(analiz['beginning2_temp']) + ';':5}" + \
+                f"{(analiz['beginning3_sum']) + ';':5}"  + \
+                f"{(analiz['beginning3_temp']) + ';':5}" + \
+                f"{(analiz['beginning4_sum']) + ';':5}"  + \
+                f"{(analiz['beginning4_temp']) + ';':5}" + \
+                f"{(analiz['end_year_sum']) + ';':5}"    + \
+                f"{(analiz['end_year_temp']) + ';':5}"   + '\n'
                 
             analiz_file.write(line)
         
@@ -91,7 +93,7 @@ while True:
     # вивід головного меню
     os.system('cls')
     print(MAIN_MENU)
-    command_number = input('Введіть номер команди: ')
+    command_number = input(">>  Введіть номер команди: ")
 
     # обробка команд користувача
     if command_number == '0':
@@ -99,25 +101,26 @@ while True:
         exit(0)
     
     elif command_number == '1':
-        analiz_list = create_analiz_list()
-        show_analiz(analiz_list)
-        input(STOP_MESSAGE)
+        print(TITLE)
+        print(HEADER)
+        for item in create_analiz():
+            print(format_analiz(item))
+        print(FOOTER)
+        enter = input("Для проодовження натисніть <Enter>")
     
     elif command_number == '2':
-        analiz_list = create_analiz_list()
-        write_analiz(analiz_list)
-        input(STOP_MESSAGE)
+        print("Запис результату в файл...")
+        analiz_list = create_analiz()
+        show_analiz(analiz_list)
+        enter = input("Для проодовження натисніть <Enter>")
     
     elif command_number == '3':
         pokazniky = get_pokazniky()
         show_pokazniky(get_pokazniky())
-        input(STOP_MESSAGE)
+        enter = input("Для проодовження натисніть <Enter>")
     
     elif command_number == '4':
         dovidniks = get_dovidniks()
         show_dovidniks(get_dovidniks())
-        input(STOP_MESSAGE)
+        enter = input("Для проодовження натисніть <Enter>")
         
-    else:
-        print("невірний номер команди...")
-        input(STOP_MESSAGE)

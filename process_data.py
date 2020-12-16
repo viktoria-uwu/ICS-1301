@@ -5,35 +5,34 @@ from data_service import get_dovidniks, get_pokazniky
 
 #накопичувач аналізів ринкових цін
 analiz = {
-    'balance_name' : '',         # назва підрозділу балансу
-    'pokaznik' : '',             # показник
-    'beginning_year' : 0.0 ,     # на початок року
-    'beginning2_sum' : 0.0 ,     # на початок 2 кв. сума, т.грн
-    'beginning2_temp' : 0.0 ,    # на початок 2 кв. темп росту %
-    'beginning3_sum' : 0.0 ,     # на початок 3 кв. сума, т.грн
+    'balance_name' : '',        # назва підрозділу балансу
+    'pokaznik' : '',            # показник
+    'start_year' : 0.0 ,        # на початок року
+    'beginning2_sum' : 0.0 ,    # на початок 2 кв. сума, т.грн
+    'beginning2_temp' : 0.0 ,   # на початок 2 кв. темп росту %
+    'beginning3_sum' : 0.0 ,    # на початок 3 кв. сума, т.грн
     'beginning3_temp' : 0.0 ,   # на початок 3 кв. темп росту %
     'beginning4_sum' : 0.0 ,    # на початок 4 кв. сума, т.грн
     'beginning4_temp' : 0.0 ,   # на початок 4 кв. темп росту %
     'end_year_sum' : 0.0 ,      # на кінець року сума, т.грн
-    'end_year_temp' : 0.0 ,     # на кінець року темп росту %
+    'end_year_temp' : 0.0       # на кінець року темп росту %
 }
 
-def create_analiz_list():
+def create_analiz():
     """формування списку аналізу даних по підприємству на основі вхідних файлів
     """
 
-    def get_balance_name(balance_code):
-        """повертає назву підприємства по його коду
+    def get_index_name(index_code):
+        """повертає назву показника по його коду
 
         Args:
-            balance_code ([type]): код підприємства
+            index_code ([type]): код назви показника
         """
         
         for dovidnik in dovidniks:
-            if int(balance_code) == int(dovidnik[0]):
+            if index_code == dovidnik[0]:
                 return dovidnik[1]
         
-        return 'назва не знайдена'
 
     analiz_list = []
 
@@ -46,19 +45,21 @@ def create_analiz_list():
         analiz_work = analiz.copy()
 
         analiz_work['balance_name'] = pokaznik[0]
-        analiz_work['pokaznik'] = get_balance_name(pokazniky[1])
-        analiz_work['beginning_year'] = pokaznik[2]
+        analiz_work['pokaznik'] = get_index_name(dovidnik[1])
+        analiz_work['start_year'] = pokaznik[2]
         analiz_work['beginning2_sum'] = pokaznik[3]
-        analiz_work['beginning2_temp'] = int(analiz_work['beginning2_sum']) / int(analiz_work['begininng_year']) * 100
+        analiz_work['beginning2_temp'] = float(analiz_work['beginning2_sum']) / float(analiz_work['start_year']) * 100
         analiz_work['beginning3_sum'] = pokaznik[4]
-        analiz_work['beginning3_temp'] = int(analiz_work['beginning3_sum']) / int(analiz_work['begininng_year']) * 100
+        analiz_work['beginning3_temp'] = float(analiz_work['beginning3_sum' ]) / float(analiz_work['start_year']) * 100
         analiz_work['beginning4_sum'] = pokaznik[5]
-        analiz_work['beginning4_temp'] = int(analiz_work['beginning4_sum']) / int(analiz_work['begininng_year']) * 100
+        analiz_work['beginning4_temp'] = float(analiz_work['beginning4_sum']) / float(analiz_work['start_year']) * 100
         analiz_work['end_year_sum'] = pokaznik[6]
-        analiz_work['end_year_temp'] = int(analiz_work['end_year_temp']) / int(analiz_work['begininng_year']) * 100
+        analiz_work['end_year_temp'] = float(analiz_work['end_year_temp']) / float(analiz_work['start_year']) * 100
 
         analiz_list.append(analiz_work)
 
     return analiz_list
 
-    
+
+def format_analiz(analiz):
+    return f'{analiz.get("balance_name"):20} | {analiz.get("pokaznik"):20} | {analiz.get("start_year"):6} | {analiz.get("beginning2_sum"):6} | {analiz.get("beginning2_temp"):6} | {analiz.get("beginning3_sum"):6} | {analiz.get("beginning3_temp"):6} | {analiz.get("beginning4_sum"):6} | {analiz.get("beginning4_temp"):6} | {analiz.get("end_year_sum"):6} | {analiz.get("end_year_sum"):6} |'

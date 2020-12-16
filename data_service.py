@@ -52,7 +52,7 @@ def show_dovidniks(dovidniks):
     kol_lines = 0
 
     for dovidnik in dovidniks:
-            print("код рядка: {:3} показник: {:35}" .format(dovidnik[0], dovidnik[1]))
+            print("Код рядка:{:3} Показник:{:30}" .format(dovidnik[0], dovidnik[1]))
             kol_lines +=1
 
     if kol_lines == 0:
@@ -69,13 +69,11 @@ def show_pokazniky(pokazniky):
     kol_line = 0
 
     for pokaznik in pokazniky:
-            print("підрозділ банку:{:40} код рядку балансу:{:3} на початок 1 кв:{:5} на початок 2 кв:{:5} на початок 3 кв:{:5} на початок 4 кв:{:5} на кінець року:{:5}".format(pokaznik[0], pokaznik[1], pokaznik[2], pokaznik[3], pokaznik[4], pokaznik[5], pokaznik[6]))
+            print("Підрозділ банку:{:5} Код рядку балансу:{:5} На початок 1 кв:{:5} На початок 2 кв:{:5} На початок 3 кв:{:5} На початок 4 кв:{:5} На кінець року:{:5}".format(pokaznik[0], pokaznik[1], pokaznik[2], pokaznik[3], pokaznik[4], pokaznik[5], pokaznik[6]))
             kol_line +=1
-
-    if kol_line == 0:
-        print("По вашому запиту нічого не знайдено")    
+  
         
-
+        
 #dovidniks = get_dovidniks()
 #show_dovidniks(dovidniks)
 
