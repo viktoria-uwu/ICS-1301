@@ -68,7 +68,7 @@ def write_analiz(analiz_list):
         analiz_list ([type]): список аналізів
     """
     
-    with open('./data/analiz.txt', "w") as analiz_file:
+    with open('./data/analiz.txt', "w", encoding='utf-8') as analiz_file:
         for analiz in analiz_list:
             line = \
                 str(analiz['balance_name']) + ';' + \
@@ -85,7 +85,7 @@ def write_analiz(analiz_list):
                 
             analiz_file.write(line)
         
-        print("Файл заявок сформовано ...")
+        print("Файл аналізу сформовано ...")
     
 
 while True:

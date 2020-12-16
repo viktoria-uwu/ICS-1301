@@ -32,8 +32,6 @@ def create_analiz():
         for dovidnik in dovidniks:
             if index_code == dovidnik[0]:
                 return dovidnik[1]
-                
-        return"***назва не знайдна"
         
 
     analiz_list = []
