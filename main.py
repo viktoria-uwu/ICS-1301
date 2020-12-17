@@ -45,17 +45,17 @@ def show_analiz(analiz_list):
     print(HEADER)
     
     for analiz in analiz_list:
-        print(f"{analiz['balance_name']:25}",         
-              f"{analiz['pokaznik']:20}",             
-              f"{analiz['start_year']:>15}",          
-              f"{analiz['beginning2_sum']:>10.2f}",   
-              f"{analiz['beginning2_temp']:>10.2f}",  
-              f"{analiz['beginning3_sum']:>11.2f}",   
-              f"{analiz['beginning3_temp']:>11.2f}", 
-              f"{analiz['beginning4_sum']:>12.2f}",   
-              f"{analiz['beginning4_temp']:>12.2f}",  
-              f"{analiz['end_year_sum']:>13.2f}",     
-              f"{analiz['end_year_sum']:>13.2f}"     
+        print(str(analiz['balance_name']),   
+              str(analiz['pokaznik']),           
+              str(analiz['start_year']),         
+              str(analiz['beginning2_sum']),  
+              str(analiz['beginning2_temp']), 
+              str(analiz['beginning3_sum']),  
+              str(analiz['beginning3_temp']), 
+              str(analiz['beginning4_sum']),  
+              str(analiz['beginning4_temp']), 
+              str(analiz['end_year_sum']),    
+              str(analiz['end_year_sum'])    
               )
     
     print(FOOTER)
@@ -85,7 +85,7 @@ def write_analiz(analiz_list):
                 
             analiz_file.write(line)
         
-        print("Файл аналізу сформовано ...")
+        print("Файл аналізу сформовано...")
     
 
 while True:
